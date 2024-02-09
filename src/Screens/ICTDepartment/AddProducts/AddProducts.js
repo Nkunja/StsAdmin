@@ -5,7 +5,7 @@ import { db, storage } from '../../../Database/config';
 
 export default function AddProduct() {
     const [productname, setProductName] = useState("");
-    const[productimage, setProductImage] = useState([]);
+    const [productimage, setProductImage] = useState([]);
     const [shortdescription, setShortDescription ] = useState("");
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
