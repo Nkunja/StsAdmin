@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import "./AddProducts.css"
 import { db, storage } from '../../../Database/config';
@@ -41,7 +42,7 @@ export default function AddProduct() {
         setSelectedSubcategory(selectedSubcategory);
       };
 
-      const handleImageChange = (e) => {
+    const handleImageChange = (e) => {
         e.preventDefault();
 
         let pickedfile;
@@ -50,81 +51,83 @@ export default function AddProduct() {
             setProductImage(pickedfile);
         }
     }
-    
-        
-      const handleSubmit = (e) => {
+
+    const handleSubmit = (e) =>{
         e.preventDefault();
-        if (!productimage.length || !model || !productname || !shortdescription
-          || !model || !selectedCategory || !selectedSubcategory || !weighrange ||
-          !minweighcapacity || !maxweighcapacity || !powersupply || !batteryestiamtedusetime
-          || !powerconsumption || !lcdbacklight || !dimensions || !brand) {
-          alert("Please fill all the fields");
-          return;
+        if (!productimage ||!model || !productname || !shortdescription 
+            || !model || !selectedCategory  || !weighrange || 
+            !minweighcapacity || !maxweighcapacity || !powersupply || !batteryestiamtedusetime 
+            || !powerconsumption || !lcdbacklight || !dimensions || !brand)
+        {
+            alert("Please fill all the fields");
+            return;
         }
-    
-        const serialNumber = Math.floor(100000 + Math.random() * 9000).toString();
-    
-        const uploadTasks = productimage.map((image, index) => {
-          const imageRef = storage.ref(`ProductImage/${serialNumber}_${index}`);
-          return imageRef.put(image);
-        });
-    
-        Promise.all(uploadTasks)
-          .then((snapshots) => {
-            const imageUrls = [];
-            snapshots.forEach((snapshot) => {
-              imageUrls.push(snapshot.metadata.fullPath);
-            });
-    
-            db.collection("Products").add({
-              ProductName: productname,
-              ShortDescription: shortdescription,
-              MainCategory: selectedCategory,
-              ProductImages: imageUrls,
-              SubCategory: selectedSubcategory,
-              Brand: brand,
-              Model: model,
-              WeighRange: weighrange,
-              MinWeighCapacity: minweighcapacity,
-              MaxWeighCapacity: maxweighcapacity,
-              PowerSupply: powersupply,
-              BatteryEstimatedUseTime: batteryestiamtedusetime,
-              PowerConsumption: powerconsumption,
-              LcdBacklight: lcdbacklight,
-              Dimensions: dimensions,
-            });
-    
-            alert('Upload Successful');
-    
-            // Reset
-            setSelectedCategory("");
-            setProductImage([]);
-            setSelectedSubcategory("");
-            setProductName("");
-            setbatteryestiamtedusetime("");
-            setbrand("");
-            setdimensions("");
-            setlcdbacklight("");
-            setmaxweighcapacity("")
-            setminweighcapacity("")
-            setmodel("")
-            setpowerconsumption("");
-            setpowersupply("");
-            setweighrange("");
-          })
-          .catch((error) => {
-            console.error("Error uploading images: ", error);
-            alert('Error uploading images. Please try again.');
-          });
-      }
-    
+
+        const serialNumber =Math.floor(100000+Math.random()*9000).toString();
+
+        const uploadTask = storage.ref("ProductImage")
+        .child(serialNumber)
+        .put(productimage);
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                let progress=((snapshot.bytesTransferred/snapshot.totalBytes)*100);
+                console.log(progress)
+            },
+            (err)=>{
+                console.log(err);
+            },
+            ()=>{
+                storage.ref("ProductImage")
+                .child(serialNumber)
+                .getDownloadURL()
+                .then((imageUrl)=>{
+                    db.collection("Products").add({
+                        ProductName: productname,
+                        ShortDescription: shortdescription,
+                        MainCategory:selectedCategory,
+                        productImage: imageUrl,
+                        SubCategory: selectedSubcategory,
+                        brand: brand,
+                        model: model,
+                        weighrange: weighrange,
+                        minweighcapacity: minweighcapacity,
+                        maxweighcapacity: maxweighcapacity,
+                        powersupply: powersupply,
+                        batteryestiamtedusetime: batteryestiamtedusetime,
+                        powerconsumption: powerconsumption,
+                        lcdbacklight: lcdbacklight,
+                        dimensions: dimensions,
+                    })
+
+                    alert('Upload Successful');
+
+                    //reset
+                    setSelectedCategory("");
+                    setProductImage(null);
+                    setSelectedSubcategory("");
+                    setProductName("");
+                    setbatteryestiamtedusetime("");
+                    setbrand("");
+                    setdimensions("");
+                    setlcdbacklight("");
+                    setmaxweighcapacity("")
+                    setminweighcapacity("")
+                    setmodel("")
+                    setpowerconsumption("");
+                    setpowersupply("");
+                    setweighrange("");
+                })
+            }
+        )
+    }
 
   return (
     <div className='container'>
         <h1>Add Product</h1>
         <form className='forms'>
         <input className='input' placeholder='Product Name' value={productname}  onChange={(e)=> setProductName(e.target.value)}/>
-        <input className='input' type='file' placeholder='image'  onChange={handleImageChange} />
+        <input className='input' type='file' placeholder='image'  onChange={handleImageChange}/>
         <textarea className='input' placeholder='Product Short Description' value={shortdescription}  onChange={(e)=> setShortDescription(e.target.value)}/>
         <textarea className='input' placeholder='Product Model' value={model}  onChange={(e)=> setmodel(e.target.value)}/>
         <textarea className='input' placeholder='Product Weigh Range' value={weighrange}  onChange={(e)=> setweighrange(e.target.value)}/>
