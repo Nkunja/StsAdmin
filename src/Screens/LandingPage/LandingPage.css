@@ -1,0 +1,103 @@
+body {
+    background: radial-gradient(circle, #0B48E5, rgba(217, 217, 217, 0.00));
+    margin: 0px;
+  }
+.landingpageContainer{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    flex-direction: row;
+}
+.sidebar{
+    width: 20%;
+    height: 100vh;
+    background: #1E1D61;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+
+}
+.mainbar{
+    width: 80%;
+    height: 100vh;
+    margin: 0px;
+}
+.logo {
+    width: 80%;
+    margin: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+.menulist {
+    height: 60vh;
+    margin-top: 50px;
+}
+.menulist ul{
+    list-style: none;
+    height: 90%;
+    padding: 0%;
+    margin: 0%;
+}
+ .menulist ul li{
+    margin-left: 0%;
+    width: 100%;
+    padding-bottom: 20px;
+    font-family: Lexend;
+    align-items: center;
+    text-align: center;
+    color:white;
+    cursor: pointer;
+    justify-content: center;
+ }
+
+ .sublist li {
+     font-size: 14px;
+     font-weight: 300;
+ }
+
+ .sublist li:hover {
+    background-color: grey;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1E1D61;
+ }
+
+
+ .menulist ul li:hover{
+    background-color: white;
+    color:#0B48E5;
+    font-size: 20px;
+ }
+
+ .logout{
+    justify-content: flex-end;
+    align-items: baseline;
+    text-align: end;
+    justify-items: baseline;
+    align-content: flex-end;
+    margin: 10px;
+
+ }
+ .logout button{
+    width: 70%;
+    padding: 10px;
+    font-family: Lexend;
+    font-size: 15px;
+    background-color: red;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+ }
+  .logout button:hover{
+    transform: scale(1.05);
+  }
+
+  .mainbar h1{
+    text-align: center;
+    font-family: Lexend;
+    color: red;
+  }
