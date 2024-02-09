@@ -43,13 +43,13 @@ export default function AddProduct() {
 
       const handleImageChange = (e) => {
         e.preventDefault();
-    
-        let pickedFiles = [];
-        if (e.target.files && e.target.files.length > 0) {
-          pickedFiles = Array.from(e.target.files);
-          setProductImage(pickedFiles);
+
+        let pickedfile;
+        if(e.target.files && e.target.files.length>0){
+            pickedfile=e.target.files[0];
+            setProductImage(pickedfile);
         }
-      }
+    }
     
         
       const handleSubmit = (e) => {
@@ -124,7 +124,7 @@ export default function AddProduct() {
         <h1>Add Product</h1>
         <form className='forms'>
         <input className='input' placeholder='Product Name' value={productname}  onChange={(e)=> setProductName(e.target.value)}/>
-        <input className='input' type='file' placeholder='image'  onChange={handleImageChange} multiple />
+        <input className='input' type='file' placeholder='image'  onChange={handleImageChange} />
         <textarea className='input' placeholder='Product Short Description' value={shortdescription}  onChange={(e)=> setShortDescription(e.target.value)}/>
         <textarea className='input' placeholder='Product Model' value={model}  onChange={(e)=> setmodel(e.target.value)}/>
         <textarea className='input' placeholder='Product Weigh Range' value={weighrange}  onChange={(e)=> setweighrange(e.target.value)}/>
