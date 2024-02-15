@@ -29,6 +29,7 @@ export default function AddProduct() {
         { id: 5, name: 'Spares & Accessories', subcategories: ['Load Cells', 'Indicators', 'Cables', 'Leveling Test', 'Batteries', 'Chargers'] },
         { id: 6, name: 'Softwares', subcategories: ['Retail Softwares', 'Weighbridge Softwares'] },
         { id: 7, name: 'POS Hardware', subcategories: ['Terminals', 'Printers', 'Scanners', 'Cash drawers', 'Thermal rolls', 'Thermal labels'] },
+        { id: 8, name: 'Counter Scales', subcategories:[]},
       ];
       const handleCategoryChange = (event) => {
         const selectedCategoryId = parseInt(event.target.value);
