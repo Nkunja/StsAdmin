@@ -143,7 +143,7 @@ export default function AddProduct() {
             <option value="">Select Manufucturer</option>
             <option>Aclas</option>
             <option>Zemic</option>
-            <option>Tclass</option>
+            <option>T-Scale</option>
             <option>Esit</option>
             <option>Akeli</option>
             <option>Want</option>
