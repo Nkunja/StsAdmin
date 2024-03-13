@@ -30,6 +30,7 @@ export default function AddProduct() {
         { id: 6, name: 'Softwares', subcategories: ['Retail Softwares', 'Weighbridge Softwares'] },
         { id: 7, name: 'POS Hardware', subcategories: ['Terminals', 'Printers', 'Scanners', 'Cash drawers', 'Thermal rolls', 'Thermal labels'] },
         { id: 8, name: 'Counter Scales', subcategories:[]},
+        { id: 9, name: 'Analytical Scales', subcategories:[]},
       ];
       const handleCategoryChange = (event) => {
         const selectedCategoryId = parseInt(event.target.value);
