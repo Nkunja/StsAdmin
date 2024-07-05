@@ -90,7 +90,10 @@ export default function LandingPage() {
                     Add Products
                   </li>
                   <li onClick={() => handleMenuItemClick('Edit Products')}>
-                    Edit/Delete Products
+                    Edit Products
+                  </li>
+                  <li >
+                    Delete Products
                   </li>
                 </ul>
               </div>
