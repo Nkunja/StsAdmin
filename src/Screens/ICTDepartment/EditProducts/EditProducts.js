@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ".././AddProducts/AddProducts.css";
 import { db, storage } from '../../../Database/config';
+import RichTextEditor from 'react-rte';
 
 export default function EditProduct() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -10,10 +11,7 @@ export default function EditProduct() {
     const [productDetails, setProductDetails] = useState({
         productName: "",
         shortDescription: "",
-        shortDescriptionh1: "",
-        shortDescriptionc1: "",
-        shortDescriptionh2: "",
-        shortDescriptionc2: "",
+        shortDescriptionh1: RichTextEditor.createEmptyValue(),
         model: "",
         weighRange: "",
         minWeighCapacity: "",
@@ -41,6 +39,8 @@ export default function EditProduct() {
         { id: 10, name: 'Business Automation', subcategories: ['Field Collection System'] },
     ];
 
+    
+
     useEffect(() => {
         if (productId) {
             db.collection("Products").doc(productId).get().then(doc => {
@@ -49,10 +49,7 @@ export default function EditProduct() {
                     setProductDetails({
                         productName: data.ProductName,
                         shortDescription: data.ShortDescription,
-                        shortDescriptionh1: data.ShortDescriptionh1,
-                        shortDescriptionc1: data.ShortDescriptionc1,
-                        shortDescriptionh2: data.ShortDescriptionh2,
-                        shortDescriptionc2: data.ShortDescriptionc2,
+                        shortDescriptionh1: RichTextEditor.createValueFromString(data.shortdescriptionh1Text || '', 'html'),
                         model: data.model,
                         weighRange: data.weighrange,
                         minWeighCapacity: data.minweighcapacity,
@@ -79,6 +76,10 @@ export default function EditProduct() {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setProductDetails(prev => ({...prev, [name]: value}));
+    };
+
+    const handleRichTextChange = (value) => {
+        setProductDetails(prev => ({...prev, shortDescriptionh1: value}));
     };
 
     const handleCategoryChange = (event) => {
@@ -124,10 +125,7 @@ export default function EditProduct() {
             db.collection("Products").doc(productId).update({
                 ProductName: productDetails.productName,
                 ShortDescription: productDetails.shortDescription,
-                ShortDescriptionh1: productDetails.shortDescriptionh1,
-                ShortDescriptionc1: productDetails.shortDescriptionc1,
-                ShortDescriptionh2: productDetails.shortDescriptionh2,
-                ShortDescriptionc2: productDetails.shortDescriptionc2,
+                ShortDescriptionh1: productDetails.shortDescriptionh1.toString('html'),
                 MainCategory: selectedCategory.name,
                 SubCategory: selectedSubcategory,
                 productImage: updatedImageUrls,
@@ -153,10 +151,7 @@ export default function EditProduct() {
                 setProductDetails({
                     productName: "",
                     shortDescription: "",
-                    shortDescriptionh1: "",
-                    shortDescriptionc1: "",
-                    shortDescriptionh2: "",
-                    shortDescriptionc2: "",
+                    shortDescriptionh1Text: "",
                     model: "",
                     weighRange: "",
                     minWeighCapacity: "",
@@ -229,10 +224,11 @@ export default function EditProduct() {
                     <input className='input' name="productName" placeholder='Product Name' value={productDetails.productName} onChange={handleInputChange} />
                     <input className='input' type='file' placeholder='image' multiple onChange={handleImageChange} />
                     <textarea className='input' name="shortDescription" placeholder='Product Short Description' value={productDetails.shortDescription} onChange={handleInputChange} />
-                    <textarea className='input' name="shortDescriptionh1" placeholder='Product Short Description Header 1' value={productDetails.shortDescriptionh1} onChange={handleInputChange} />
-                    <textarea className='input' name="shortDescriptionc1" placeholder='Product Short Description content 1' value={productDetails.shortDescriptionc1} onChange={handleInputChange} />
-                    <textarea className='input' name="shortDescriptionh2" placeholder='Product Short Description Header 2' value={productDetails.shortDescriptionh2} onChange={handleInputChange} />
-                    <textarea className='input' name="shortDescriptionc2" placeholder='Product Short Description content 2' value={productDetails.shortDescriptionc2} onChange={handleInputChange} />
+                    <RichTextEditor
+                        value={productDetails.shortDescriptionh1}
+                        onChange={handleRichTextChange}
+                    />
+
                     <select className='input' value={selectedCategory?.id || ''} onChange={handleCategoryChange}>
                         <option value="">Select Category</option>
                         {categories.map((category) => (
